@@ -380,7 +380,7 @@
     padding-bottom: .5rem;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-/*     background-color: hsl(0 0% 0% / 0.8); */
+    /* background-color: hsl(0 0% 0% / 0.8); */
 }
 .Room .chat_controls.open{
     display: block;
@@ -391,7 +391,7 @@
 */
 .Room .chat-input_container{
     position: relative;
-    padding: .25rem;
+    padding: 0 1rem .5rem 1rem;
     opacity: 0;
     transform-origin: bottom;
     transform: scaleY(0%);
