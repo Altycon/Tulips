@@ -40,7 +40,6 @@
 }
 .video1{
     display: block;
-/*     height: 100%; */
     max-width: 100vw;
     object-fit: cover;
     background-color: transparent;
@@ -60,8 +59,8 @@
     grid-template-columns: repeat(4,auto);
     grid-template-rows: repeat(2,auto);
     justify-content: center;
-    gap: 1rem;
-    padding: 1rem;
+    gap: .5rem;
+    padding: .5rem;
 }
 
 .Room .app_controls > button{
@@ -101,16 +100,16 @@
     opacity: 1;
 }
 .Room .app_controls > button:nth-child(1) > img{
-    width: 24px;
+    width: 20px;
 }
 .Room .app_controls > button:nth-child(2) > img{
-    width: 24px;
+    width: 20px;
 }
 .Room .app_controls > button:nth-child(3) > img{
-    width: 24px;
+    width: 20px;
 }
 .Room .app_controls > button:nth-child(4) > img{
-    width: 24px;
+    width: 20px;
 }
 .Room .app_controls > button:nth-child(5) > img{
     width: 16px;
@@ -221,7 +220,7 @@
     justify-self: end;
     width: 100%;
     max-width: 500px;
-    height: 33vh;
+    height: 25vh;
     background-color: hsl(0 0% 0% / 0.5);
     
     padding: 1rem;
@@ -355,8 +354,7 @@
     padding: 1rem;
 }
 .video2{
-/*     max-width: 150px; */
-    max-height: 150px;
+    width: 33vw;
     border-radius: 5px;
     background-color: black;
     box-shadow: 0px 0px 5px var(--shadow-color-primary);
@@ -379,7 +377,7 @@
     align-self: self-end;
     justify-self: end;
     display: none;
-    padding: .5rem;
+    padding-bottom: .5rem;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     background-color: hsl(0 0% 0% / 0.8);
@@ -393,8 +391,7 @@
 */
 .Room .chat-input_container{
     position: relative;
-    padding: .5rem;
-    margin-bottom: .5rem;
+    padding: .25rem;
     opacity: 0;
     transform-origin: bottom;
     transform: scaleY(0%);
@@ -412,8 +409,9 @@
     font-size: 1.2rem;
     border: none;
     padding: 10px;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+    border-radius: 50px;
+    /* border-top-left-radius: 10px;
+    border-top-right-radius: 10px; */
     color: var(--bc-dark);
     resize: none;
 }
@@ -775,7 +773,10 @@
 *   RESPONSIVENES: MOBILE -> DESKTOP || ROOM PAGE
 */
 
+/* @media only screen and (orientation: portrait){
+   
 
+} */
 
 @media only screen and (min-width: 500px){
    .Room{
