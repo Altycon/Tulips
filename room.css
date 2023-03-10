@@ -380,7 +380,6 @@
     padding-bottom: .5rem;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-    /* background-color: hsl(0 0% 0% / 0.8); */
 }
 .Room .chat_controls.open{
     display: block;
@@ -410,8 +409,6 @@
     border: none;
     padding: 10px;
     border-radius: 50px;
-    /* border-top-left-radius: 10px;
-    border-top-right-radius: 10px; */
     color: var(--bc-dark);
     resize: none;
 }
@@ -436,7 +433,6 @@
 }
 
 .Room .chat-emoticon{
-    /* padding: 5px; */
     font-size: 1.2rem;
     border: none;
     background-color: transparent;
@@ -502,7 +498,6 @@
 *   CHAT BUTTONS
 */
 .Room .chat-btn_container{
-    /* border: 1px solid white; */
     justify-content: space-evenly;
     opacity: 0;
     transform-origin: bottom;
@@ -520,6 +515,7 @@
     color: var(--fc-light);
     background-color: transparent;
     border: none;
+    border-radius: 50%;
     cursor: pointer;
     transition: all 100ms ease;
 }
@@ -535,29 +531,17 @@
     -webkit-filter: invert(100%);
     opacity: 0.5;
 }
+.Room .chat-btn_container > button:last-of-type > img{
+    width: 24px;
+}
 .Room .chat-btn_container > button:hover > img{
     opacity: 1;
 }
-.Room .chat-btn_container > button:not(:last-child){
-    padding: 5px;
-    border-radius: 50%;
-}
+
 #TranslateLanguageButton.active{
     outline: 2px solid blue;
     background-color: var(--btn-bg-color-active);
 }
-.send-message_btn{
-    outline: 1px solid white;
-    font-size: 1.2rem;
-    font-weight: 700;
-    padding: 3px 5px;
-    border-radius: 10px;
-}
-.send-message_btn:active{
-    scale: .96;
-}
-
-
 
 
 
