@@ -221,7 +221,7 @@
     width: 100%;
     max-width: 500px;
     height: 25vh;
-    background-color: hsl(0 0% 0% / 0.5);
+/*     background-color: hsl(0 0% 0% / 0.5); */
     
     padding: 1rem;
     border-bottom-left-radius: 10px;
