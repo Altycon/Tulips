@@ -615,14 +615,15 @@
 .Room .canvas_controls > button:not(:last-of-type):hover{
     background-color: var(--shadow-color-primary);
 }
-.Room .canvas_controls > button:not(:last-of-type):hover > img{
-    opacity: 1;
-}
 .Room .canvas_controls > button:not(:last-of-type) > img{
     filter: invert(100%);
     -webkit-filter: invert(100%);
     opacity: 0.5;
 }
+.Room .canvas_controls > button:not(:last-of-type):hover > img{
+    opacity: 1;
+}
+
 .Room .canvas_controls .pen-size_btn{
     padding: 10px;
 }
