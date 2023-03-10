@@ -127,7 +127,7 @@ function TESTaddMessageToChat(){ // <= for testing
     const TIME = `${NOW.toLocaleTimeString()} ${NOW.toLocaleDateString()}`;
     addMessageToChatWindow({ 
         type: 'client', 
-        username: 'Altycon', 
+        username: 'CLIENT', 
         message: message, 
         room: 'Room101',
         time: TIME
@@ -168,7 +168,7 @@ function handleImageUpload(ev){
     const TIME = `${NOW.toLocaleTimeString()} ${NOW.toLocaleDateString()}`
     addImageToChatWindow({ // <= for testing
         type: 'client',
-        username: 'Altycon',
+        username: 'CLIENT',
         time: TIME,
         data: file
     });
