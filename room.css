@@ -1,26 +1,17 @@
 /*
 *   ROOM PAGE
 */
-/* .selected{
-    outline: 1px solid blue;
-    background-color: red;
-} */
+
 
 .Room{
     position: relative;
-    min-height: 100vh;
-    min-height: 100dvh;
+    height: 100vh;
+    height: 100dvh;
+    max-height: 100vw;
     /* overflow: hidden; */
-    grid-template-columns: 1fr;
-    grid-template-rows: auto auto 1fr auto;
     isolation: isolate;
 }
-/*
-*   PAGEWIDE 
-*/
-/* .Room .video_player{
-    outline: 1px solid hsl(0 0% 50% / 0.3);
-} */
+
 
 /*
 *   PAGE TOPOLOGY
@@ -29,7 +20,7 @@
 *   VIDEO 1
 */
 .Room .video1_container{
-    position: absolute;
+    position: fixed;
     top: 0; left: 0;
     width: 100vw;
     height: 100vh;
@@ -47,17 +38,12 @@
 
 
 
-
-
 /*
 *   APP CONTROLS
 */
 .Room .app_controls{
-    grid-column: 1;
-    grid-row: 1;
-
     grid-template-columns: repeat(4,auto);
-    grid-template-rows: repeat(2,auto);
+    grid-template-rows: repeat(2,max-content);
     justify-content: center;
     gap: .5rem;
     padding: .5rem;
@@ -65,7 +51,7 @@
 
 .Room .app_controls > button{
     width: max-content;
-    background-color: hsl(0 0% 0% / 0.5);
+    background-color: hsl(0 0% 0% / 0.2);
     border: none;
     box-shadow: var(--bs-outward);
     border-radius: 50%;
@@ -213,22 +199,18 @@
 *   CHAT WINDOW 
 */
 .Room .chat_container{
-    grid-column: 1;
-    grid-row: 2;
-
     display: none;
     justify-self: end;
     width: 100%;
     max-width: 500px;
     height: 25vh;
-    background-color: hsl(0 0% 0% / 0.5);
-    
+    background-color: hsl(0 0% 0% / 0.2);
     padding: 1rem;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
 }
 .Room .chat_container.open{
-    display: block;
+    display: grid;
     animation: fadeIn 500ms linear forwards;   
 }
 .Room .chat_window{
@@ -339,22 +321,24 @@
 
 
 
-
+.Room .bottom_wrapper{
+    position: fixed;
+    bottom: 0; left: 0;
+    width: 100%;
+}
 
 /*
 *   VIDEO 2
 */
-.video2_container{
-    grid-column: 1;
-    grid-row: 3;
-
+.Room .video2_container{
+    width: 33%;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     padding: 1rem;
 }
-.video2{
-    width: 33vw;
+.Room .video2{
+    width: 100%;
     border-radius: 5px;
     background-color: black;
     box-shadow: 0px 0px 5px var(--shadow-color-primary);
@@ -369,14 +353,8 @@
 *   CHAT CONTROLS
 */
 .Room .chat_controls{
-    grid-column: 1;
-    grid-row: 4;
-    
     width: 100%;
     max-width: 500px;
-    align-self: self-end;
-    justify-self: end;
-    display: none;
     padding-bottom: .5rem;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
@@ -405,7 +383,7 @@
 .Room .chat-input_container > textarea{
     width: 100%;
     font-family: 'Helvetica';
-    font-size: 1.2rem;
+    font-size: 1rem;
     border: none;
     padding: 10px;
     border-radius: 50px;
@@ -510,6 +488,8 @@
     animation: closeVertically 300ms linear forwards;
 }
 .Room .chat-btn_container > button{
+    width: 30px;
+    height: 30px;
     align-items: center;
     justify-content: center;
     color: var(--fc-light);
@@ -764,8 +744,9 @@
 
 @media only screen and (min-width: 500px){
    .Room{
+        display: grid;
         grid-template-columns: 1fr 1fr;
-        grid-template-rows: 1fr 1fr;
+        grid-template-rows: auto;
     }
     .Room .app_controls{
         grid-column: 1;
@@ -793,23 +774,28 @@
     .Room .app_controls > button:nth-child(7) > img{
         width: 12px;
     }
+  
     .Room .chat_container{
         grid-column: 2;
         grid-row: 1;
         height: 50vh;
     }
+
+    .Room .bottom_wrapper{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
     .video2_container{
-        grid-column: 1;
-        grid-row: 2;
+        
     }
     .Room .chat_controls{
-        grid-column: 2;
-        grid-row: 2;
         height: max-content;
+        justify-self: end;
+        align-self: flex-end;
     }
 };
 
-@media only screen and (orientaion:landscape) and (min-width: 630px){
+/* @media only screen and (orientaion:landscape) and (min-width: 630px){
     .Room .app_controls > button:nth-child(1) > img{
         width: 24px;
     }
@@ -831,5 +817,5 @@
     .Room .app_controls > button:nth-child(7) > img{
         width: 16px;
     }
-};
+}; */
 
