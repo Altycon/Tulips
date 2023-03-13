@@ -98,7 +98,7 @@ function openMoreAppOptions(ev){
 
 
 function openCanvasDisplay(){
-    lockBody();
+    
     ROOM.CANVAS.BUTTON.ACTIVATION.dataset.active = 'true';
     ROOM.CONTROLS.MAIN_BUTTONS.forEach( main_btn => {
         main_btn.classList.add('hide');
@@ -116,6 +116,7 @@ function openCanvasDisplay(){
         openWindow(ROOM.CANVAS.CONTAINER);
         initializeCanvas();
         addCanvasListeners();
+        lockBody();
     }else{
         closeWindow(ROOM.CANVAS.CONTAINER);
         removeCanvasListeners();

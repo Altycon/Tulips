@@ -1,30 +1,30 @@
 import { DPI, TWO_PI } from "./canvas-utilities.js";
 
-let pointerInterval;
+const hasPointerEvent = !!window.PointerEvent;
 
-// This works but I'm not sure how to use it for multiple things
-// I need to rethink all of this and what I want to do with it
+const pointerEventNames = {
+  start: window.PointerEvent ? 'pointerdown' : 'touchstart',
+  move: window.PointerEvent ? 'pointermove' : 'touchmove',
+  end: window.PointerEvent ? 'pointerup' : 'touchend',
+};
 
 class Pointer{
     constructor(size,color){
         this.x = null;
         this.y = null;
         this.dpi = DPI;
-        this.touching = 0;
+        this.state = 0;
         this.size = size * this.dpi || 5 * this.dpi;
         this.color = color || 'black';
     }
     setState(n){
-        this.touching = n;
+        this.state = n;
     }
     setSize(size){
         this.size = size * this.dpi;
     }
     setColor(color){
         this.color = color;
-    }
-    clearPath(){
-        this.path = [];
     }
     update(x,y){
         this.x = x * this.dpi;
@@ -34,7 +34,6 @@ class Pointer{
         this.x = null;
         this.y = null;
         this.setState(0);
-        this.path = [];
     }
     render(context,color){
         context.fillStyle = color || 'black';
@@ -55,12 +54,22 @@ function trackPointer(canvas,pointer){
     const dctx = canvas.getContext('2d');
     const pointerMove = (ev)=>{
         ev.preventDefault();
-        const {pointerId, target, clientX, clientY} = ev;
-        const x = clientX - dc_x;
-        const y = clientY - dc_y;
-        pointer.update(x, y);
-        pointer.render(dctx, pointer.color);
-
+        let x, y;
+        if(ev.touches && ev.touches[0]){
+            for(let i = 0; i < ev.touches.length; i++){
+                x = ev.touches[i].clientX - dc_x;
+                y = ev.touches[i].clientY - dc_y;
+                pointer.update(x, y);
+                pointer.render(dctx, pointer.color);
+            }
+        }else{
+            x = ev.clientX - dc_x;
+            y = ev.clientY - dc_y;
+            pointer.update(x, y);
+            pointer.render(dctx, pointer.color);
+        }
+        
+        
         // sendToServer({
         //     type: 'drawing',
         //     vector: { x: x, y: y},
@@ -69,18 +78,21 @@ function trackPointer(canvas,pointer){
         // })   
     }
     const pointerUp = (ev)=>{
-        const { pointerId, target } = ev
-        target.releasePointerCapture(pointerId);
+        const { target } = ev;
+        if(ev.pointerId){
+            target.releasePointerCapture(ev.pointerId);
+        }
         pointer.update(null,null);
         pointer.reset();
-        target.removeEventListener('pointermove', pointerMove);
-        target.removeEventListener('pointerup', pointerUp);
+        target.removeEventListener(pointerEventNames.move, pointerMove);
+        target.removeEventListener(pointerEventNames.end, pointerUp);
         
     }
     const pointerDown = (ev)=>{
         ev.preventDefault();
-        const { pointerId, target, clientX, clientY } = ev; 
-        target.setPointerCapture(pointerId);
+        const { target, clientX, clientY } = (ev.touches && ev.touches[0]) || ev;
+        if(ev.pointerId) target.setPointerCapture(ev.pointerId);
+        
         pointer.setState(1);
         const x = clientX - dc_x;
         const y = clientY - dc_y;
@@ -93,14 +105,14 @@ function trackPointer(canvas,pointer){
         //     size: pointer.size,
         //     color: pointer.color
         // })
-        target.addEventListener('pointermove', pointerMove);
-        target.addEventListener('pointerup', pointerUp);
+        target.addEventListener(pointerEventNames.move, pointerMove);
+        target.addEventListener(pointerEventNames.end, pointerUp);
     }
     // stop context menu from poping up when holding mouse down
     canvas.addEventListener('contextmenu', (ev)=> {
         ev.preventDefault();
     })
-    canvas.addEventListener('pointerdown', pointerDown);
+    canvas.addEventListener(pointerEventNames.start, pointerDown);
 };
 
 export { Pointer }
