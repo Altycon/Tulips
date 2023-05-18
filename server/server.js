@@ -12,6 +12,7 @@ App.set('views', path.join(path.dirname(new URL(import.meta.url).pathname), 'vie
 App.set('view engine', 'ejs');
 
 App.use(express.static('client'));
+App.use('/favicon.ico', express.static('img/icon/favicon.ico'));
 
 App.get('/', (request,response)=>{
     response.render('pages/index');

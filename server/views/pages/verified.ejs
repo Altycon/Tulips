@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TULIPS || Verification</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/icons/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="stylesheet" href="/main.css">
+  </head>
+  <body>
+    <div class="VerificationPage">
+        <header>
+            <h1>TULIPS</h1>
+        </header>
+        <main>
+            <section class="verification-box">
+                <h2>Email Verification</h2>
+                <div class="">
+                    <% if (success) { %>
+                    <p class="verify-mark">&check;</p>
+                    <% } else { %>
+                    <p class="verify-mark">&#10060;</p>
+                    <% } %>
+                </div>
+                <h3><%- success ? 'SUCCESS':'FAILED' %></h3>
+                <p class="verification-message"><%- message %></p>
+                <div class="offset-rectangle <%- success ? 'valid-bg':'invalid-bg' %> "></div>
+                <p class="verification_link_container">
+                  <% if (success) { %>
+                  <a href="/auth/login" class="link verification_link">Go to Tulips Login Page</a>
+                  <% } else { %>
+                  <a href="/auth/register" class="link verification_link">Try signing up again.</a>
+                  <% } %>
+                </p>
+            </section>
+        </main>
+    </div>
+  </body>
+</html>

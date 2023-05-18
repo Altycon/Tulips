@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TULIPS || HOME</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/icons/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="stylesheet" href="/main.css">
+    <script src="/js/home/index.js" type="module"></script>
+</head>
+<body> 
+    <div class="grid HomePage">
+
+        <div class="client-notification js-client-notification">
+            <div class="client-notification_content js-client-notification_content">
+                <h2 class="client-notification_title js-client-notification_title">There was an error!</h2>
+                <p class="client-notification_message js-client-notification_message">Apoligize,I. There was a network error that stopped any communication between you and the server. Whatever you were trying to do...didn't happen.</p>
+                <p class="client-notification_instructions js-client-notification_instructions">Be on your way or try again.</p>
+                <button type="button" class="client-notification-close_btn js-client-notification-close_btn">&otimes;</button>
+            </div>
+        </div>
+
+        <header class="flex-row main-header HomePage_header">
+            <h1>Tulips</h1>
+            <nav class="HomePage_navigation">
+                <ul>
+                    <li>
+                        <form action="/user/logout" method="post" class="js-logout-user_form">
+                            <button type="submit" 
+                                class="button logout_btn"
+                                >Logout
+                            </button>
+                        </form>
+                    </li>
+                    <li>
+                        <a href="/user/home" class="HomePage-nav_link">Settings</a>
+                    </li>
+                </ul>
+            </nav>
+            <button type="button" class="user-navigation_button"><%- user.username %></button>
+        </header>
+        <main>
+            <section class="grid cover">
+                <article>
+                    <h2>Room</h2>
+                    <button type="button" class="button create-room_btn js-create-room_btn">CREATE<br>A<br>ROOM</button>
+                    <button type="button" class="button join-room_btn js-join-room_btn">JOIN<br>A<br>ROOM</button>
+                </article>
+            </section>
+        </main>
+        <div class="create-room_popup js-create-room_popup">
+            <div class="overlay"></div>
+            <div class="content">
+                <h2>Create Room</h2>
+
+                <form action="/user/room/create" 
+                    method="post"
+                    id="CreateRoomForm" 
+                    class="room_form js-create-room_form">
+
+                    <input type="text" 
+                        name="room" 
+                        id="CreateRoomName" 
+                        class="form-input js-create-room_input"
+                        autocomplete="off"
+                        placeholder="Room name"
+                        title="Only letters numbers _ - Min: 5, Max: 20"
+                        required>
+
+                        <input type="number" 
+                            name="passkey" 
+                            id="CreateRoomPasskey"
+                            class="form-input form-passkey_input js-create-room-passkey_input"
+                            placeholder="PASSKEY"
+                            title="Numbers: Min: 4, Recommeded: 6"
+                            autocomplete="off"
+                            required>
+
+                    <button type="button" class="button generate-passkey_btn js-generate-passkey_btn">Generate Passkey</button>
+                    <button type="submit" class="button">Create Room</button>
+                </form>
+                <button type="button" class="button cancel-create_btn js-cancel-create_btn">Cancel</button>
+            </div>
+        </div>
+        <div class="join-room_popup js-join-room_popup">
+            <div class="overlay"></div>
+            <div class="content">
+                <h2>Join Room</h2>
+
+                <form action="/user/room/join" 
+                    method="post" 
+                    id="JoinRoomForm" 
+                    class="room_form js-join-room_form">
+
+                    <input type="text" 
+                        name="room" 
+                        id="JoinRoomName" 
+                        class="form-input js-join-room_input"
+                        placeholder="Room name"
+                        title="Only letters numbers _ - Min: 5, Max: 20"
+                        autocomplete="off"
+                        required>
+
+                    <input type="number" 
+                        name="passkey" 
+                        id="JoinRoomPasskey"
+                        class="form-input js-join-room-passkey_input"
+                        placeholder="PASSKEY"
+                        title="Numbers: Min: 4, Recommeded: 6"
+                        autocomplete="off"
+                        required>
+
+                    <button type="submit" class="button">Join</button>
+                </form>
+                <button type="button" class="button cancel-join_btn js-cancel-join_btn">Cancel</button>
+            </div>
+        </div>
+        <footer>
+            <p>&copy;&nbsp;2023 Tulips</p>
+        </footer>
+    </div>
+</body>
+</html>

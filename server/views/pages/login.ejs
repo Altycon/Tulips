@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TULIPS || Login</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/icons/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="stylesheet" href="/main.css">
+    <script src="/js/login/login.js" type="module"></script>
+</head>
+<body>
+    <div class="LoginPage">
+
+        <div class="client-notification js-client-notification">
+            <div class="client-notification_content js-client-notification_content">
+                <h2 class="client-notification_title js-client-notification_title">There was an error!</h2>
+                <p class="client-notification_message js-client-notification_message">Apoligize,I. There was a network error that stopped any communication between you and the server. Whatever you were trying to do...didn't happen.</p>
+                <p class="client-notification_instructions js-client-notification_instructions">Be on your way or try again.</p>
+                <button type="button" class="client-notification-close_btn js-client-notification-close_btn">&otimes;</button>
+            </div>
+        </div>
+
+        <header class="login_header">
+            <nav class="login_navigation">
+                <ul class=" flex-row login_navigation_list">
+                    <li><a href="/" class="link login_navigation_link">Tulips</a></li>
+                    <li><a href="/register" class="link login_navigation_link">Signup</a></li>
+                </ul>
+            </nav> 
+        </header>
+        <main>
+            <section class="login_form_container">
+                <form action="/auth/login" 
+                    method="post" 
+                    id="LoginForm" 
+                    class="login_form js-login_form">
+                    <div class="input_container">
+                        <label for="LoginEmail" class="form_label">Email</label>
+                        <input type="text"
+                            name="email" 
+                            id="LoginEmail" 
+                            autocomplete="off"
+                            class="form_input js-login-email"
+                            required>
+                    </div>
+                    <div class="input_container">
+                        <label for="LoginPassword" class="form_label">Password</label>
+                        <input type="password" 
+                            name="password" 
+                            id="LoginPassword" 
+                            autocomplete="off"
+                            class="form_input js-login-password"
+                            required>
+                    </div>
+                    <div class="input_container">
+                        <input type="checkbox" 
+                            name="rememberMe"
+                            value="checked" 
+                            id="RememberMe"
+                            class="form_checkbox remember-me_input">
+                        <label for="RememberMe" class="checkbox_label">Remember Me</label>
+                    </div>
+                    
+                    <button type="submit" class="button form-button login-submit_button">Login</button>
+                </form>
+            </div>
+        </main>
+        <footer>
+            <p>&copy;&nbsp;2023 Tulips</p>
+        </footer>
+    </div>
+</body>
+</html>

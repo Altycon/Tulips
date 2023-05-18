@@ -29,6 +29,28 @@ npm i socket.io
 
 import io from 'socket.io-client';
 
+# Heroku Deployment Steps
+
+- have a github repository set up
+- make sure code is added to repository
+  $ git init
+  $ git remote add origin git@github.com:Altycon/Tulips.git
+  $ git add .
+  $ git commit -m "first commit"
+  $ git branch -M main
+  $ git push -u origin main
+  $ Enter passphrase for key ... (Make sure to set up an SSL key with git hub) <-- someday I'll make notes of how it was done...
+
+- create a heroku account
+- download heroku CLI
+  $ curl https://cli-assets.heroku.com/install.sh | sh   <-- linux
+- login into Heroku from comman line
+  $ heroku login
+- add heroku remote to github
+  $ heroku git:remote -a app-name
+
+
+
 # RESOURCES
 
 - express

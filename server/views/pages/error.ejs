@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TULIPS ERROR</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/icons/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="stylesheet" href="/main.css">
+</head>
+<body>
+    <main class="ErrorPage">
+        <section class="error-hero">
+            <h1>An Error has occured.</h1>
+            <img src="/img/icons/document-error-icon-256.png" alt="">
+            <p>Something has gone wrong.</p>
+            <p>If there is a message below, that is the reason.</p>
+            <p>If not, try returning to <a href="/">Tulips</a>.</p>
+            <p class="error-message <%- success? 'hidden':'' %>">* <%- message? message:'' %></p>
+        </section> 
+    </main>
+</body>
+</html>

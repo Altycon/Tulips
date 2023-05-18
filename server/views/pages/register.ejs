@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TULIPS || Register</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/icons/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="stylesheet" href="/main.css">
+    <script src="/js/registration/registration.js" type="module"></script>
+</head>
+<body>
+    <div class="grid SignupPage">
+
+        <div class="client-notification js-client-notification">
+            <div class="client-notification_content js-client-notification_content">
+                <h2 class="client-notification_title js-client-notification_title">There was an error!</h2>
+                <p class="client-notification_message js-client-notification_message">Apoligize,I. There was a network error that stopped any communication between you and the server. Whatever you were trying to do...didn't happen.</p>
+                <p class="client-notification_instructions js-client-notification_instructions">Be on your way or try again.</p>
+                <button type="button" class="client-notification-close_btn js-client-notification-close_btn">&otimes;</button>
+            </div>
+        </div>
+
+        <header class="signup_header">
+            <nav class="signup_navigation">
+                <ul class=" flex-row signup_navigation_list">
+                    <li><a href="/" class="link signup_navigation_link">Tulips</a></li>
+                    <li><a href="/login" class="link signup_navigation_link">Login</a></li>
+                </ul>
+            </nav> 
+        </header>
+        <main>
+            <section class="signup_form_container">
+                <form action="/auth/register" 
+                    method="post" 
+                    id="SignupForm" 
+                    class="signup_form js-signup_form">
+
+                    <div class="signup-advisory">
+                        <p>When registering an account with <strong>TULIPS</strong>, an email will be sent to the email you provided to complete the signup process. Make sure you have a valid and easily accessible email account.</p>
+                    </div>
+                    <div class="input_container">
+                        <label for="SignupUsername" class="form_label">Username</label>
+                        <input type="text" 
+                            name="username" 
+                            id="SignupUsername"
+                            class="form_input js-signup-username"
+                            autocomplete="off" 
+                            required>
+                    </div>
+                    <div class="input_container">
+                        <label for="SignupEmail" class="form_label">Email</label>
+                        <input type="text" 
+                            name="email" 
+                            id="SignupEmail"
+                            class="form_input js-signup-email" 
+                            autocomplete="off" 
+                            required>
+                    </div>
+                    <div class="input_container">
+                        <label for="SignupPassword" class="form_label">Password</label>
+                        <input type="password" 
+                            name="password" 
+                            id="SignupPassword"
+                            class="form_input js-signup-password" 
+                            autocomplete="off" 
+                            required>
+                    </div>
+                    <button type="submit" class="button signup-submit_button js-signup-submit_button">Send Email Verification</button>
+                </form>
+            </div>
+        </main>
+        <footer>
+            <p>&copy;&nbsp;2023 Tulips</p>
+        </footer>
+    </div>
+</body>
+</html>

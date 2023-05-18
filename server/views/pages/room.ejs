@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TULIPS || Room</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/icons/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="stylesheet" href="/main.css">
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/room/index.js" type="module"></script>
+</head>
+<body>
+    <main class="Room">
+
+        <div class="video-notification js-video-notification">
+            <div class="video-notification_content js-video-notification_content">
+                <h2 class="video-notification_title js-video-notification_title"></h2>
+                <p class="video-notification_message js-video-notification_message">Accept message from: "peername1234"?</p>
+                <div class="video-notification_btn-container">
+                    <button type="button" class="video-notification-decline_btn js-video-notification-decline_btn">Decline</button>
+                    <button type="button" class="video-notification-accept_btn js-video-notification-accept_btn">Accept</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="client-notification js-client-notification">
+            <div class="client-notification_content js-client-notification_content">
+                <h2 class="client-notification_title js-client-notification_title">There was an error!</h2>
+                <p class="client-notification_message js-client-notification_message">Apoligize,I. There was a network error that stopped any communication between you and the server. Whatever you were trying to do...didn't happen.</p>
+                <p class="client-notification_instructions js-client-notification_instructions">Be on your way or try again.</p>
+                <button type="button" class="client-notification-close_btn js-client-notification-close_btn">&otimes;</button>
+            </div>
+        </div>
+
+        <!-- PEER VIDEO -->
+        <section class="video1_container">
+            <video id="Video1" class="video_player video1" autoplay playsinline loop></video>
+        </section>
+
+        <!-- ROOM BUTTONS -->
+        <section class="grid app_controls">
+            <button id="LeaveRoomButton"
+                class="button leave-room_btn js-leave-room_btn"
+                type="button"
+                title="Leave Room">
+                <img src="/img/icons/arrow-left-icon-64.png" alt="">
+            </button>
+            <!-- VIDEO CONTROLS -->
+            <button id="MuteVideoButton" 
+                type="button" 
+                class="button mute-video_btn js-mute-video_btn main_btn js-main_btn inactive"
+                title="Mute video">
+                <img src="/img/icons/video-call-icon-64.png" alt="">
+            </button>
+            <button id="MuteAudioButton" 
+                type="button" 
+                class="button mute-audio_btn js-mute-audio_btn main_btn js-main_btn inactive"
+                title="Mute audio">
+                <img src="/img/icons/mic-icon-64.png" alt="">
+            </button>
+            <button id="EndCallButton" 
+                type="button" 
+                class="button end-call_btn js-end-call_btn main_btn js-main_btn inactive"
+                title="End call">
+                <img src="/img/icons/end-call-icon-64.png" alt="">
+            </button>
+            <button id="StartCallButton" 
+                type="button" 
+                class="button start-call_btn js-start-call_btn main_btn js-main_btn"
+                title="Start call">
+                <img src="/img/icons/video-call-icon-64.png" alt="">
+            </button>
+
+            <!-- MORE BUTTON -->
+            <button id="OpenMoreButton"
+                type="button"
+                class="button open-more_btn js-open-more_btn main_btn js-main_btn"
+                title="More Options">
+                <img src="/img/icons/dot3-icon-64.png" alt="">
+            </button>
+
+            <!-- APP OPTIONS -->
+            <button id="ChatCanvasButton" 
+                type="button"
+                class="button chat-canvas_btn app-option_btn js-chat-canvas_btn js-app-option_btn"
+                title="Open canvas">
+                <img src="/img/icons/draw-icon-64.png" alt="">
+            </button>
+            <button id="ChatTranslateButton" 
+                type="button" 
+                class="button chat-translate_btn app-option_btn js-chat-translate_btn js-app-option_btn"
+                title="Translate">
+                <img src="/img/icons/translate-icon-64.png" alt="">
+            </button>
+            <button id="ChatDisplayButton" 
+                type="button"
+                class="button chat-display_btn app-option_btn js-chat-display_btn js-app-option_btn"
+                title="Open chat">
+                <img src="/img/icons/message-icon-64.png" alt="">
+            </button>
+        </section>
+
+        <!-- CHAT WINDOW -->
+        <section class="chat_container js-chat_container">
+            <div class="chat_window js-chat_window">
+               
+            </div>
+        </section>
+
+        <div class="bottom_wrapper">
+            <!-- CLIENT VIDEO -->
+
+            <section class="video2_container">
+                <div class="video2_wrapper">
+                    <video id="Video2" class="video_player video2" autoplay playsinline loop></video>
+                </div>
+                <div class="room-notification js-room-notification">
+                    <ul class="room-notification_list js-room-notification_list">
+                        <!-- <li class="room-notification_message">Some message about something or other and this and/or that.</li> -->
+                    </ul>
+                    
+                </div>
+            </section>
+
+            <!-- CHAT MESSAGING -->
+            <section class="chat_controls js-chat_controls">
+                <div class="chat-input_container">
+                    <textarea id="TextMessageInput" 
+                        rows="1"
+                        class="js-text-message_input" 
+                        placeholder="chat message..."
+                        autocomplete="off"></textarea>
+                    
+                    <div class="flex-row chat-emoticons js-chat-emoticons">
+                        <!-- Face Smiling -->
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F600" title="grinning face">&#x1F600;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F603" title="grinning face with big eyes">&#x1F603;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F604" title="grinning face with smiling eyes">&#x1F604;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F601" title="beaming face with smiling eyes">&#x1F601;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F606" title="grinning squinting face">&#x1F606;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F605" title="grinning face with sweat">&#x1F605;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F923" title="rolling on the floor laughing">&#x1F923;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F602" title="face with tears of joy">&#x1F602;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F642" title="slightly smiling face">&#x1F642;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F643" title="upside-down face">&#x1F643;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1FAE0" title="melting face">&#x1FAE0;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F609" title="winking face">&#x1F609;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F60A" title="smiling face with smiling eyes">&#x1F60A;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F607" title="smiling face with halo">&#x1F607;</button>
+        
+                        <!-- Face Affection -->
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F970" title="smiling face with hearts">&#x1F970;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F60D" title="smiling face with heart-eyes">&#x1F60D;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F929" title="star-struck">&#x1F929;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F618" title="face blowing a kiss">&#x1F618;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F617" title="kissing face">&#x1F617;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+263A" title="smiling face">&#x263A;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F61A" title="kissing face with closed eyes">&#x1F61A;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F619" title="kissing face with smiling eyes">&#x1F619;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F972" title="smiling face with tear">&#x1F972;</button>
+                
+                        <!-- Face Tongue -->
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F60B" title="face savoring food">&#x1F60B;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F61B" title="face with tongue">&#x1F61B;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F61C" title="winking face with tongue">&#x1F61C;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F92A" title="zany face">&#x1F92A;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F61D" title="squinting face with tongue">&#x1F61D;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F911" title="money-mouth face">&#x1F911;</button>
+
+        
+                        <!-- Face Hand -->
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F917" title="smiling face with open hands">&#x1F91;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F92D" title="face with hand over mouth">&#x1F92D;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1FAE2" title="face with open eyes and hand over mouth">&#x1FAE2;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1FAE3" title="face with peeking eye">&#x1FAE3;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F92B" title="shushing face">&#x1F92B;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F914" title="thinking face">&#x1F914;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1FAE1" title="saluting face">&#x1FAE1;</button>
+
+                        <!-- Face Neutral Skeptical -->
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F910" title="zipper-mouth face">&#x1F910;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F928" title="face with raised eyebrow">&#x1F928;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F610" title="neutral face">&#x1F610;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F611" title="expressionless face">&#x1F611;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F636" title="face without mouth">&#x1F636;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1FAE5" title="dotted line face">&#x1FAE;5</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F636" title="face in clouds">&#x1F636;</button>
+                        <!-- more face in clouds codes U+200D U+1F32B U+FE0F -->
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F60F" title="smirking face">&#x1F60F;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F612" title="unamused face">&#x1F612;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F644" title="face with rolling eyes">&#x1F644;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F62C" title="grimacing face">&#x1F62C;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F62E" title="face exhaling">&#x1F62E;</button>
+                        <!-- more face exhaling codes U+200D U+1F4A8 -->
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F925" title="lying face">&#x1F925;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1FAE8" title="shaking face">&#x1FAE8;</button>
+
+                        <!-- Face Sleepy -->
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F60C" title="relieved face">&#x1F60C;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F614" title="pensive face">&#x1F614;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F62A" title="sleepy face">&#x1F62A;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F924" title="drooling face">&#x1F924;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F634" title="sleeping face">&#x1F634;</button>
+
+                        <!-- Face Unwell -->
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F637" title="face with medical mask">&#x1F637;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F912" title="face with thermometer">&#x1F912;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F915" title="face with head-bandage">&#x1F915;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F922" title="nauseated face">&#x1F922;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F92E" title="face vomiting">&#x1F92E;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F927" title="sneezing face">&#x1F927;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F975" title="hot face">&#x1F975;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F976" title="cold face">&#x1F976;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F974" title="woozy face">&#x1F974;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F635" title="face with crossed-out eyes">&#x1F635;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F635" title="face with spiral eyes">&#x1F635;</button>
+                        <!-- more face with spiral eyes U+200D U+1F4AB-->
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F92F" title="exploding head">&#x1F92F;</button>
+
+                        <!-- Face Glasses -->
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F60E" title="smiling face with sunglasses">&#x1F60E;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F913" title="nerd face">&#x1F913;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F9D0" title="face with monocle">&#x1F9D0;</button>
+                        
+                        <!-- Face Concerned -->
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F615" title="confused face">&#x1F615;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1FAE4" title="face with diagonal mouth">&#x1FAE4;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F61F" title="worried face">&#x1F61F;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F641" title="slightly frowning face">&#x1F641;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+2639" title="frowning face">&#x2639;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F62E" title="face with open mouth">&#x1F62E;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F62F" title="hushed face">&#x1F62F;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F632" title="astonished face">&#x1F632;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F633" title="flushed face">&#x1F633;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F97A" title="pleading face">&#x1F97A;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F979" title="face holding back tears">&#x1F979;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F626" title="frowning face with open mouth">&#x1F626;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F627" title="anguished face">&#x1F627;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F628" title="fearful face">&#x1F628;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F630" title="anxious face with sweat">&#x1F630;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F625" title="sad but relieved face">&#x1F625;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F622" title="crying face">&#x1F622;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F62D" title="loudly crying face">&#x1F62D;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F631" title="face screaming in fear">&#x1F631;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F616" title="confounded face">&#x1F616;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F623" title="persevering face">&#x1F623;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F61E" title="disappointed face">&#x1F61E;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F613" title="downcast face with sweat">&#x1F613;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F629" title="weary face">&#x1F629;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F62B" title="tired face">&#x1F62B;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F971" title="yawning face">&#x1F971;</button>
+                        
+                        <!-- Face Negative -->
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F624" title="face with steam from nose">&#x1F624;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F621" title="enraged face">&#x1F621;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F620" title="angry face">&#x1F620;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F92C" title="face with symbols on mouth">&#x1F92C;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F608" title="smiling face with horns">&#x1F608;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F47F" title="angry face with horns">&#x1F47F;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+1F480" title="skull">&#x1F480;</button>
+                        <button class="button chat-emoticon js-chat-emoticon" value="U+2620" title="skull and crossbones">&#x2620;</button>
+
+                        <!-- Face Costume -->
+                        <button class="chat-emoticon js-chat-emoticon" value="U+1F4A9" title="pile of poo">&#x1F4A9;</button>
+
+                        <!-- <button class="chat-emoticon" value="" title=""></button>
+                        <button class="chat-emoticon js-chat-emoticon" value="" title=""></button>
+                        <button class="chat-emoticon js-chat-emoticon" value="" title=""></button>
+                        <button class="chat-emoticon js-chat-emoticon" value="" title=""></button> -->
+                    </div>
+                    <div class="flex-row chat-languages js-chat-languages">
+                        <button class="button chat-language js-chat-language" value="af" title="Afrikaans">AF</button>
+                        <button class="button chat-language js-chat-language" value="sq" title="Albanian">AL</button>
+                        <button class="button chat-language js-chat-language" value="am" title="Amharic">AM</button>
+                        <button class="button chat-language js-chat-language" value="ar" title="Arabic">AR</button>
+                        <button class="button chat-language js-chat-language" value="hy" title="Armenian">AN</button>
+                        <button class="button chat-language js-chat-language" value="as" title="Assamese">AS</button>
+                        <button class="button chat-language js-chat-language" value="ay" title="Aymara">AY</button>
+                        <button class="button chat-language js-chat-language" value="az" title="Azerbaijani">AZ</button>
+                        <button class="button chat-language js-chat-language" value="bm" title="Bambara">BM</button>
+                        <button class="button chat-language js-chat-language" value="eu" title="Basque">BQ</button>
+                        <button class="button chat-language js-chat-language" value="be" title="Belarusian">BE</button>
+                        <button class="button chat-language js-chat-language" value="bn" title="Bengali">BN</button>
+                        <button class="button chat-language js-chat-language" value="bho" title="Bhojpuri">BHO</button>
+                        <button class="button chat-language js-chat-language" value="bs" title="Bosnian">BS</button>
+                        <button class="button chat-language js-chat-language" value="bg" title="Bulgarian">BG</button>
+                        <button class="button chat-language js-chat-language" value="ca" title="Catalan">CA</button>
+                        <button class="button chat-language js-chat-language" value="ceb" title="Cebuano">CEB</button>
+                        <button class="button chat-language js-chat-language" value="zh-CN" title="Chinese(S)">CNS</button>
+                        <button class="button chat-language js-chat-language" value="zh" title="Chinese(S)">CNS</button>
+                        <button class="button chat-language js-chat-language" value="zh-TW" title="Chinese(T)">CNT</button>
+                        <button class="button chat-language js-chat-language" value="co" title="Corscan">CO</button>
+                        <button class="button chat-language js-chat-language" value="hr" title="Croatian">HR</button>
+                        <button class="button chat-language js-chat-language" value="cs" title="Czech">CS</button>
+                        <button class="button chat-language js-chat-language" value="da" title="Danish">DA</button>
+                        <button class="button chat-language js-chat-language" value="dv" title="Dhivehi">DV</button>
+                        <button class="button chat-language js-chat-language" value="doi" title="Dogri">DOI</button>
+                        <button class="button chat-language js-chat-language" value="nl" title="Dutch">NL</button>
+                        <button class="button chat-language js-chat-language" value="en" title="English">EN</button>
+                        <button class="button chat-language js-chat-language" value="eo" title="Esperanto">EO</button>
+                        <button class="button chat-language js-chat-language" value="et" title="Estonian">ET</button>
+                        <button class="button chat-language js-chat-language" value="ee" title="Ewe">EE</button>
+                        <button class="button chat-language js-chat-language" value="fil" title="Filipino (Tagalog)">FIL</button>
+                        <button class="button chat-language js-chat-language" value="fi" title="Finnish">FI</button>
+                        <button class="button chat-language js-chat-language" value="fr" title="French">FR</button>
+                        <button class="button chat-language js-chat-language" value="fy" title="Frisian">FY</button>
+                        <button class="button chat-language js-chat-language" value="gl" title="Galician">GL</button>
+                        <button class="button chat-language js-chat-language" value="ka" title="Georgian">KA</button>
+                        <button class="button chat-language js-chat-language" value="de" title="German">DE</button>
+                        <button class="button chat-language js-chat-language" value="el" title="Greek">EL</button>
+                        <button class="button chat-language js-chat-language" value="gn" title="Guarani">GN</button>
+                        <button class="button chat-language js-chat-language" value="gu" title="Gujarati">GU</button>
+                        <button class="button chat-language js-chat-language" value="ht" title="Haitian Creole">HT</button>
+                        <button class="button chat-language js-chat-language" value="ha" title="Hausa">HA</button>
+                        <button class="button chat-language js-chat-language" value="haw" title="Hawaiian">HAW</button>
+                        <button class="button chat-language js-chat-language" value="he" title="Hebrew">HE</button>
+                        <button class="button chat-language js-chat-language" value="iw" title="Hebrew">IW</button>
+                        <button class="button chat-language js-chat-language" value="hi" title="Hindi">HI</button>
+                        <button class="button chat-language js-chat-language" value="hmn" title="Hmong">HMN</button>
+                        <button class="button chat-language js-chat-language" value="hu" title="Hungarian">HU</button>
+                        <button class="button chat-language js-chat-language" value="is" title="Icelandic">IS</button>
+                        <button class="button chat-language js-chat-language" value="ig" title="Igbo">IG</button>
+                        <button class="button chat-language js-chat-language" value="ilo" title="Ilocano">ILO</button>
+                        <button class="button chat-language js-chat-language" value="id" title="Indonesian">ID</button>
+                        <button class="button chat-language js-chat-language" value="ga" title="Irish">GA</button>
+                        <button class="button chat-language js-chat-language" value="it" title="Italian">IT</button>
+                        <button class="button chat-language js-chat-language" value="ja" title="Japanese">JA</button>
+                        <button class="button chat-language js-chat-language" value="jv" title="Javanese">JV</button>
+                        <button class="button chat-language js-chat-language" value="jw" title="Javanese">JW</button>
+                        <button class="button chat-language js-chat-language" value="kn" title="Kannada">KN</button>
+                        <button class="button chat-language js-chat-language" value="kk" title="Kazakh">KK</button>
+                        <button class="button chat-language js-chat-language" value="km" title="Khmer">KM</button>
+                        <button class="button chat-language js-chat-language" value="rw" title="Kinyarwanda">RW</button>
+                        <button class="button chat-language js-chat-language" value="gom" title="Konkani">GOM</button>
+                        <button class="button chat-language js-chat-language" value="ko" title="Korean">KO</button>
+                        <button class="button chat-language js-chat-language" value="kri" title="Krio">KRI</button>
+                        <button class="button chat-language js-chat-language" value="ku" title="Kurdish">KU</button>
+                        <button class="button chat-language js-chat-language" value="ckb" title="Kurdish (Sorani)">CKB</button>
+                        <button class="button chat-language js-chat-language" value="ky" title="Kyrgyz">KY</button>
+                        <button class="button chat-language js-chat-language" value="lo" title="Lao">LO</button>
+                        <button class="button chat-language js-chat-language" value="la" title="Latin">LA</button>
+                        <button class="button chat-language js-chat-language" value="lv" title="Latvian">LV</button>
+                        <button class="button chat-language js-chat-language" value="lt" title="Lithuanian">LT</button>
+                        <button class="button chat-language js-chat-language" value="lg" title="Luganda">LG</button>
+                        <button class="button chat-language js-chat-language" value="lb" title="Luxembourgish">LB</button>
+                        <button class="button chat-language js-chat-language" value="mk" title="Macedonian">MK</button>
+                        <button class="button chat-language js-chat-language" value="mai" title="Maithili">MAI</button>
+                        <button class="button chat-language js-chat-language" value="mg" title="Malagasy">MG</button>
+                        <button class="button chat-language js-chat-language" value="ms" title="Malay">MS</button>
+                        <button class="button chat-language js-chat-language" value="ml" title="Malayalam">ML</button>
+                        <button class="button chat-language js-chat-language" value="mt" title="Maltese">MT</button>
+                        <button class="button chat-language js-chat-language" value="mi" title="Maori">MI</button>
+                        <button class="button chat-language js-chat-language" value="mr" title="Marathi">MR</button>
+                        <button class="button chat-language js-chat-language" value="mni-Mtei" title="Meiteilon (Manipuri)">Mni</button>
+                        <button class="button chat-language js-chat-language" value="lus" title="Mizo">LUS</button>
+                        <button class="button chat-language js-chat-language" value="mn" title="Mongolian">MN</button>
+                        <button class="button chat-language js-chat-language" value="my" title="Myanmar (Burmese)">MY</button>
+                        <button class="button chat-language js-chat-language" value="ne" title="Nepali">NE</button>
+                        <button class="button chat-language js-chat-language" value="no" title="Norwegian">NO</button>
+                        <button class="button chat-language js-chat-language" value="ny" title="Nyanja (Chichewa)">NY</button>
+                        <button class="button chat-language js-chat-language" value="or" title="Odia (Oriya)">OR</button>
+                        <button class="button chat-language js-chat-language" value="om" title="Oromo">OM</button>
+                        <button class="button chat-language js-chat-language" value="ps" title="Pashto">PS</button>
+                        <button class="button chat-language js-chat-language" value="fa" title="Persian">FA</button>
+                        <button class="button chat-language js-chat-language" value="pl" title="Polish">PL</button>
+                        <button class="button chat-language js-chat-language" value="pt" title="Portuguese (Portugal, Brazil)">PT</button>
+                        <button class="button chat-language js-chat-language" value="pa" title="Punjabi">PA</button>
+                        <button class="button chat-language js-chat-language" value="qu" title="Quechua">QU</button>
+                        <button class="button chat-language js-chat-language" value="ro" title="Romanian">RO</button>
+                        <button class="button chat-language js-chat-language" value="ru" title="Russian">RU</button>
+                        <button class="button chat-language js-chat-language" value="sm" title="Samoan">SM</button>
+                        <button class="button chat-language js-chat-language" value="sa" title="Sanskrit">SA</button>
+                        <button class="button chat-language js-chat-language" value="gd" title="Scots Gaelic">GD</button>
+                        <button class="button chat-language js-chat-language" value="nso" title="Sepedi">NSO</button>
+                        <button class="button chat-language js-chat-language" value="sr" title="Serbian">SR</button>
+                        <button class="button chat-language js-chat-language" value="st" title="Sesotho">ST</button>
+                        <button class="button chat-language js-chat-language" value="sn" title="Shona">SN</button>
+                        <button class="button chat-language js-chat-language" value="sd" title="Sindhi">SD</button>
+                        <button class="button chat-language js-chat-language" value="si" title="Sinhala (Sinhalese)">SI</button>
+                        <button class="button chat-language js-chat-language" value="sk" title="Slovak">SK</button>
+                        <button class="button chat-language js-chat-language" value="sl" title="Slovenian">SL</button>
+                        <button class="button chat-language js-chat-language" value="so" title="Somali">SO</button>
+                        <button class="button chat-language js-chat-language" value="es" title="Spanish">ES</button>
+                        <button class="button chat-language js-chat-language" value="su" title="Sundanese">SU</button>
+                        <button class="button chat-language js-chat-language" value="sw" title="Swahili">SW</button>
+                        <button class="button chat-language js-chat-language" value="sv" title="Swedish">SV</button>
+                        <button class="button chat-language js-chat-language" value="tl" title="Tagalog (Filipino)">TL</button>
+                        <button class="button chat-language js-chat-language" value="tg" title="Tajik">TG</button>
+                        <button class="button chat-language js-chat-language" value="ta" title="Tamil">TA</button>
+                        <button class="button chat-language js-chat-language" value="tt" title="Tatar">TT</button>
+                        <button class="button chat-language js-chat-language" value="te" title="Telugu">TE</button>
+                        <button class="button chat-language js-chat-language" value="th" title="Thai">TH</button>
+                        <button class="button chat-language js-chat-language" value="ti" title="Tigrinya">TI</button>
+                        <button class="button chat-language js-chat-language" value="ts" title="Tsong">TS</button>
+                        <button class="button chat-language js-chat-language" value="tr" title="Turkish">TR</button>
+                        <button class="button chat-language js-chat-language" value="tk" title="Turkmen">TK</button>
+                        <button class="button chat-language js-chat-language" value="ak" title="Twi (Akan)">AK</button>
+                        <button class="button chat-language js-chat-language" value="uk" title="Ukrainian">UK</button>
+                        <button class="button chat-language js-chat-language" value="ur" title="Urdu">UR</button>
+                        <button class="button chat-language js-chat-language" value="ug" title="Uyghur">UG</button>
+                        <button class="button chat-language js-chat-language" value="uz" title="Uzbek">UZ</button>
+                        <button class="button chat-language js-chat-language" value="vi" title="Vietnamese">VI</button>
+                        <button class="button chat-language js-chat-language" value="cy" title="Welsh">CY</button>
+                        <button class="button chat-language js-chat-language" value="xh" title="Xhosa">XH</button>
+                        <button class="button chat-language js-chat-language" value="yi" title="Yiddish">YI</button>
+                        <button class="button chat-language js-chat-language" value="yo" title="Yoruba">YO</button>
+                        <button class="button chat-language js-chat-language" value="zu" title="Zulu">ZU</button>
+                    </div>
+                </div>
+                
+                
+                <div class="chat-btn_container flex-row">
+                    <button id="ChatSettingsButton" 
+                        type="button"
+                        class="button flex-row js-chat-settings_btn"
+                        title="Settings">
+                        <img src="/img/icons/settings-icon-64.png" alt="">
+                    </button>
+                    <button id="MessageAttachmentButton" 
+                        type="button" 
+                        class="button flex-row js-message-attachment_btn"
+                        title="Attachments">
+                        <img src="/img/icons/attachment-icon-64.png" alt="">
+                    </button>
+                    <input type="file" name="image" class="hidden js-image-upload_input">
+                    <button id="MessageEmojisButton" 
+                        type="button"
+                        class="button flex-row js-message-emojis_btn"
+                        title="Emoticons">
+                        <img src="/img/icons/emoji-icon-64.png" alt="">
+                    </button>
+                    <button id="TranslateLanguageButton" 
+                        type="button"
+                        class="button flex-row translate-language_btn js-translate-language_btn"
+                        title="Language">
+                        <img src="/img/icons/language-icon-64.png" alt="" class="translate-language_img">
+                    </button>
+                    <button id="SendMessageButton" 
+                        type="button" 
+                        class="button send-message_btn js-send-message_btn">
+                        <img src="/img/icons/send-icon-64.png" alt="" class="send-message_img">
+                    </button>
+                </div>
+
+                <!-- MESSAGING OPTIONS -->
+                
+            
+
+                <!-- <div class="chat_settings js-chat_settings">
+                    <div class="chat-text-size">
+                        <p>Text Size</p>
+                        <button type="button" value="0.75">S</button>
+                        <button type="button" value="1">M</button>
+                        <button type="button" value="1.25">L</button>
+                    </div>
+                </div> -->
+            </section>
+
+        </div>
+
+        <!-- CANVAS -->
+        <section class="hidden canvas_container js-canvas_container">
+            
+            <div class="flex-column canvas_controls js-canvas_controls">
+                <button id="PenSizeButton" 
+                    type="button"
+                    class="button pen-size_btn js-pen-size_btn"
+                    title="Pen Size"
+                    data-active="false">
+                    <img src="/img/icons/paint-brush-icon-64.png" alt="" class="pen-size_img">
+                </button>
+                <button id="EraseCanvasButton" 
+                    type="button"
+                    class="button erase-canvas_btn js-erase-canvas_btn"
+                    title="Erase Canvas"
+                    data-active="false">
+                    <img src="/img/icons/trash-icon-64.png" alt="" class="erase-canvas_img">
+                </button>
+                <button id="PenColorButton" 
+                    type="button"
+                    class="button pen-color_btn js-pen-color_btn"
+                    title="Pen Erase"
+                    data-active="false">
+                    <img src="/img/icons/color-palette-icon-64.png" alt="" class="pen-color_img">
+                </button> 
+                <button id="CanvasActivationButton" 
+                    type="button"
+                    class="button canvas-activation_btn js-canvas-activation_btn"
+                    title="On/Off"
+                    data-active="false">&nbsp;
+                </button>
+                <input type="color" 
+                        name="penColor" 
+                        id="PenColorInput"
+                        class="hidden js-pen-color_input"
+                        value="#FFFFFF">
+                <div class="flex-column pen-size_options js-pen-size_options">
+                    <input type="button" value="1" class="button pen-size_option js-pen-size_option">
+                    <input type="button" value="2" class="button pen-size_option js-pen-size_option selected">
+                    <input type="button" value="3" class="button pen-size_option js-pen-size_option">
+                    <input type="button" value="4" class="button pen-size_option js-pen-size_option">
+                </div>
+            </div>
+            <canvas class="canvas js-canvas"></canvas>
+        </section>
+    </main>
+</body>
+</html>
