@@ -34,7 +34,7 @@ const userSessionOptions = {
 
 if(process.env.NODE_ENV === 'production'){
     userSessionOptions.cookie.httpOnly = false;
-    userSessionOptions.cookie.sameSite = 'strict';
+    userSessionOptions.cookie.sameSite = 'lax';
     userSessionOptions.cookie.secure = true;
 }
 
