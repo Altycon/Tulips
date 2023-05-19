@@ -1,10 +1,9 @@
-import { io } from "../server.js";
+//import { io } from "../server.js";
 import { VIEWS } from "../views/views.js";
 import { User } from "../models/user_model.js";
 import { Room } from "../models/room_model.js";
 import { hashData } from "../utilities/hash-data.js";
 import { verifyHashData } from "../utilities/verify_hash_data.js";
-import { logError } from "../logger/log-error.js";
 import { ROUTES } from "../routes/routes.js";
 
 function getUserHome(request,response){

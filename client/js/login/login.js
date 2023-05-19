@@ -71,7 +71,7 @@ async function handleLoginSubmit(event){
         //handle network error
         displayClientNotificationMessage(LOGIN.NOTIFICATIONS.MAIN, {
             title: `Network error`,
-            message: `There is a problem with the network connection.`,
+            message: `There is a problem with the network connection. ${error.message}`,
             instructions: `Please wait a few moments and try again.`
         });
     }

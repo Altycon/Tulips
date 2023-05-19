@@ -30,7 +30,9 @@ async function sendVerificationEmail({ _id, email }){
     try{
         const unique_string = uuidv4() + _id;
 
-        const link = `${process.env.HOST_URL + "auth/verify/" + _id + "/" + unique_string}`;
+        const origin = process.env.NODE_ENV === 'production' ? process.env.HOST_URL:`http://localhost:3000`;
+        
+        const link = `${origin + "/auth/verify/" + _id + "/" + unique_string}`;
         const html = await ejs.renderFile('./server/views/email/verification_email.ejs',{ link });
 
         const mail_options = {
