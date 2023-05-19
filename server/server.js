@@ -59,8 +59,6 @@ App.get(ROUTES.GET.FALLBACK, (request,response)=>{
     response.redirect('/');
 });
 
-//App.listen(port, ()=> console.log(`Tulips server listening on port ${port}`));
-
 server.listen(port, ()=> console.log(`Server running on port ${port}`));
 
 //export { io };
