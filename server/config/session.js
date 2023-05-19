@@ -14,7 +14,7 @@ const userSessionOptions = {
     cookie: { 
         //domain: '',
         //expires: setExpirationDate((24 * 60 * 60 * 1000)), // add 1 day
-        httpOnly: false, 
+        httpOnly: true, 
         maxAge: null, // 604800000, // 7*24*60*60*1000 - 1 week
         path: '/',
         sameSite: 'none', // true or 'strict' = strict, false = not set, 'lax' = (recommended)lax sameSite enforcement, 'none' = default-explicit cross-site cookie
