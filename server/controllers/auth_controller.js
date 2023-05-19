@@ -170,7 +170,7 @@ async function authenticateUser(request,response){
                 
                 await User.updateOne({ _id: USER_ID }, { active: true });
 
-                response.status(200).redirect(ROUTES.GET.USER_HOME);
+                return response.status(200).redirect(ROUTES.GET.USER_HOME);
             }
         }   
     }catch(error){
