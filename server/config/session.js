@@ -14,11 +14,11 @@ const userSessionOptions = {
     cookie: { 
         //domain: '',
         //expires: setExpirationDate((24 * 60 * 60 * 1000)), // add 1 day
-        httpOnly: true, // false in production
+        httpOnly: false, 
         maxAge: null, // 604800000, // 7*24*60*60*1000 - 1 week
         path: '/',
         sameSite: 'none', // true or 'strict' = strict, false = not set, 'lax' = (recommended)lax sameSite enforcement, 'none' = default-explicit cross-site cookie
-        // secure: true  // this will enforce 'https' secure connection
+        secure: false  // this will enforce 'https' secure connection
         //                  doesn't work with 'localhost' unless configured properly (OpenSSL certificates)
     },
     //genid: function(),
@@ -33,7 +33,6 @@ const userSessionOptions = {
 };
 
 if(process.env.NODE_ENV === 'production'){
-    userSessionOptions.cookie.httpOnly = false;
     userSessionOptions.cookie.sameSite = 'lax';
     userSessionOptions.cookie.secure = true;
 }
