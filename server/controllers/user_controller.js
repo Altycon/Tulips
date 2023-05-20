@@ -7,12 +7,14 @@ import { verifyHashData } from "../utilities/verify_hash_data.js";
 import { ROUTES } from "../routes/routes.js";
 
 function getUserHome(request,response){
-    if(!request.session || !request.session.user){
-        response.redirect(ROUTES.GET.LOGIN);
-    }else{
-        const { user } = request.session;
-        response.status(200).render(VIEWS.HOME, { user });
-    }
+    const { user } = request.session;
+    response.status(200).render(VIEWS.HOME, { user });
+    // if(!request.session || !request.session.user){
+    //     response.redirect(ROUTES.GET.LOGIN);
+    // }else{
+    //     const { user } = request.session;
+    //     response.status(200).render(VIEWS.HOME, { user });
+    // }
 };
 function getUserRoom(request,response){
     if(!request.session || !request.session.user){
