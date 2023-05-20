@@ -166,12 +166,13 @@ async function authenticateUser(request,response){
 
                 session.authenticated = true;
                 session.user = { userId: USER_ID, username: fetched_user[0].username };
-
+                console.log('Session User: ', session.user);
+                
                 //await saveSessionData(request,session);
                 
                 await User.updateOne({ _id: USER_ID }, { active: true });
 
-                return response.status(200).redirect(ROUTES.GET.USER_HOME);
+                response.status(200).redirect(ROUTES.GET.USER_HOME);
             }
         }   
     }catch(error){
