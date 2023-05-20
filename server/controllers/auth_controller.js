@@ -115,6 +115,7 @@ async function saveSessionData(request,sessionData){
     return new Promise((resolve, reject) => {
         session_store.set(session_id, sessionData, (error) => {
             if (error) {
+                console.log(error);
                 reject(error);
             } else {
                 resolve();
@@ -166,7 +167,7 @@ async function authenticateUser(request,response){
                 session.authenticated = true;
                 session.user = { userId: USER_ID, username: fetched_user[0].username };
 
-                await saveSessionData(request,session);
+                //await saveSessionData(request,session);
                 
                 await User.updateOne({ _id: USER_ID }, { active: true });
 
