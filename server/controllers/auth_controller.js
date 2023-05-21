@@ -118,6 +118,7 @@ async function saveSessionData(request,sessionData){
                 console.log(error);
                 reject(error);
             } else {
+                console.log('saved-SessionData', sessionData);
                 resolve();
             }
         });
