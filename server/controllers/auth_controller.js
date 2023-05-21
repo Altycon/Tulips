@@ -94,20 +94,20 @@ async function registerUser(request,response){
         response.render(VIEWS.ERROR, { success: false, message: error.message});
     }
 };
-async function getSessionData(request){
-    const session_id = request.session.id;
-    const session_store = request.sessionStore;
+// async function getSessionData(request){
+//     const session_id = request.session.id;
+//     const session_store = request.sessionStore;
 
-    return new Promise((resolve, reject) => {
-        session_store.get(session_id, (error, sessionData) => {
-            if (error) {
-                reject(error);
-            } else {
-                resolve(sessionData);
-            }
-        });
-    });
-};
+//     return new Promise((resolve, reject) => {
+//         session_store.get(session_id, (error, sessionData) => {
+//             if (error) {
+//                 reject(error);
+//             } else {
+//                 resolve(sessionData);
+//             }
+//         });
+//     });
+// };
 async function saveSessionData(request,sessionData){
     const session_id = request.session.id;
     const session_store = request.sessionStore;
