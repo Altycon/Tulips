@@ -47,6 +47,7 @@ App.use(cors({
 App.use(express.json());
 App.use(express.urlencoded({ extended: false }));
 
+App.set('trust proxy', 1);
 App.use(session(userSessionOptions))
 
 App.use(ROUTES.GET.INDEX, indexRouter);
