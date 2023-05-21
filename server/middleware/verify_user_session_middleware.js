@@ -13,6 +13,8 @@ function verifyUserSession(request,response,next){
                     console.log( error);
                     throw new Error(error.message);
                 }else{
+                    console.log('SessionData: ', sessionData);
+                    
                     if(!sessionData || !sessionData.authenticated){
                         response.redirect(ROUTES.GET.LOGIN)
                     }else{

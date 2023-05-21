@@ -13,7 +13,7 @@ import { verifyUserSession } from '../middleware/verify_user_session_middleware.
 
 const userRouter = express.Router();
 
-userRouter.get(ROUTES.GET.HOME, getUserHome);
+userRouter.get(ROUTES.GET.HOME, verifyUserSession, getUserHome);
 userRouter.get(ROUTES.GET.ROOM, verifyUserSession, getUserRoom);
 
 //userRouter.post(ROUTES.POST.ROOM_CREATE, validateRoomForm, createRoom);
