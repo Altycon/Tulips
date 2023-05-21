@@ -41,7 +41,7 @@ async function verifyUserSession(request,response,next){
 
             const data = await getSessionData(request);
 
-            console.log('session-data (verify): ', data);
+            //console.log('session-data (verify): ', data);
             
             if(data){
                 next();

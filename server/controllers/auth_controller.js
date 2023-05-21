@@ -118,7 +118,7 @@ async function saveSessionData(request,sessionData){
                 console.log(error);
                 reject(error);
             } else {
-                console.log('saved-SessionData', sessionData);
+                //console.log('saved-SessionData', sessionData);
                 resolve();
             }
         });
@@ -167,7 +167,7 @@ async function authenticateUser(request,response){
 
                 session.authenticated = true;
                 session.user = { userId: USER_ID, username: fetched_user[0].username };
-                console.log('Session User: ', session.user);
+                //console.log('Session User: ', session.user);
                 
                 await saveSessionData(request,session);
                 
