@@ -1,4 +1,4 @@
-//import { io } from "../server.js";
+import { io } from "../server.js";
 import { VIEWS } from "../views/views.js";
 import { User } from "../models/user_model.js";
 import { Room } from "../models/room_model.js";
