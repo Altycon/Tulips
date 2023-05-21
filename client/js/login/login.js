@@ -76,7 +76,11 @@ async function handleLoginSubmit(event){
                 });
             }
             
-           
+            // const data = await response.json();
+            // if(!data.success){
+            //     displayClientNotificationMessage(LOGIN.NOTIFICATIONS.MAIN, data); 
+            // }
+
         }else{
             displayClientNotificationMessage(LOGIN.NOTIFICATIONS.MAIN, {
                 title: `Network error`,
