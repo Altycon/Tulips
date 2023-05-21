@@ -168,7 +168,7 @@ async function authenticateUser(request,response){
                 session.user = { userId: USER_ID, username: fetched_user[0].username };
                 console.log('Session User: ', session.user);
                 
-                //await saveSessionData(request,session);
+                await saveSessionData(request,session);
                 
                 await User.updateOne({ _id: USER_ID }, { active: true });
 
