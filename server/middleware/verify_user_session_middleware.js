@@ -11,15 +11,15 @@ function verifyUserSession(request,response,next){
             session_store.get(session_id, (error, sessionData)=>{
                 if(error){
                     console.log( error);
-                    throw new Error(error.message);
+                    response.redirect(ROUTES.GET.LOGIN)
                 }else{
                     console.log('SessionData: ', sessionData);
-                    
-                    if(!sessionData || !sessionData.authenticated){
-                        response.redirect(ROUTES.GET.LOGIN)
-                    }else{
-                        next();
-                    }
+                    next();
+                    // if(!sessionData || !sessionData.authenticated){
+                        
+                    // }else{
+                        
+                    // }
                 }
             }); 
         }else{

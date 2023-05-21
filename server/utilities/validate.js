@@ -60,9 +60,9 @@ function isPassword(password, options = {}){
 }
 
 function isSession(request){
-    if(request.session === null || request.session === undefined){
+    if(request.session === null || request.session === "undefined"){
         return false;
-    }else if(request.session.id === null || request.session.id === undefined || request.session.id.includes(' ')){
+    }else if(request.session.id === null || request.session.id === "undefined" || request.session.id.includes(' ')){
         return false;
     }else if(!request.sessionStore){
         return false;

@@ -52,14 +52,31 @@ async function handleLoginSubmit(event){
     try{
         const response = await postLoginFormData(form_data, login_url);
         if(response){
-            if(response.ok){
-                window.location.replace('/user/home');
-            }else{
-                const data = await response.json();
-                if(!data.success){
-                    displayClientNotificationMessage(LOGIN.NOTIFICATIONS.MAIN, data); 
+            // if(response.ok){
+            //     window.location.replace('/user/home');
+            // }else{
+            //     const data = await response.json();
+            //     if(!data.success){
+            //         displayClientNotificationMessage(LOGIN.NOTIFICATIONS.MAIN, data); 
+            //     }
+            // }
+
+            const data = await response.json();
+            if(data){
+                if(data.success){
+                    window.location.replace('/user/home');
+                }else{
+                    displayClientNotificationMessage(LOGIN.NOTIFICATIONS.MAIN, data);
                 }
+            }else{
+                displayClientNotificationMessage(LOGIN.NOTIFICATIONS.MAIN, {
+                    title: `Data error`,
+                    message: `No data came from server.`,
+                    instructions: `Please wait a few moments and try again.`
+                });
             }
+            
+           
         }else{
             displayClientNotificationMessage(LOGIN.NOTIFICATIONS.MAIN, {
                 title: `Network error`,
